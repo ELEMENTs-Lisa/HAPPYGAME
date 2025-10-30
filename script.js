@@ -5,68 +5,169 @@ let timeLeft = 60;
 let gameTimer;
 let currentWordIndex = 0;
 let isGameActive = false;
+let gameMode = 'practice'; // 新增遊戲模式變數: 'practice' (自己練習) 或 'battle' (人機對戰)
 
-// 10個關卡的英文單字（適合12歲以下兒童）
+// 10個關卡的英文句子
 const gameLevels = [
-    // 第1關：基礎動物
     {
         level: 1,
-        title: "可愛動物",
-        words: ["cat", "dog", "pig", "cow", "duck", "bird", "fish", "bee", "ant", "owl"]
+        title: "基礎問候語",
+        sentences: [
+            "Hello, how are you?",
+            "I am fine, thank you.",
+            "What is your name?",
+            "My name is Alex.",
+            "Nice to meet you.",
+            "Good morning, everyone.",
+            "Have a good day.",
+            "See you later.",
+            "Excuse me, please.",
+            "Thank you very much."
+        ]
     },
-    // 第2關：顏色
     {
         level: 2,
-        title: "美麗顏色",
-        words: ["red", "blue", "green", "yellow", "pink", "black", "white", "brown", "orange", "purple"]
+        title: "日常對話",
+        sentences: [
+            "Where are you from?",
+            "I am from Taiwan.",
+            "What do you do?",
+            "I am a student.",
+            "How old are you?",
+            "I am ten years old.",
+            "Do you like apples?",
+            "Yes, I like apples.",
+            "Can you help me?",
+            "Of course, I can."
+        ]
     },
-    // 第3關：數字
     {
         level: 3,
-        title: "數字世界",
-        words: ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+        title: "學校生活",
+        sentences: [
+            "I go to school every day.",
+            "My favorite subject is English.",
+            "I have many friends at school.",
+            "We learn new things in class.",
+            "The teacher is very kind.",
+            "I read a book in the library.",
+            "We play games during break time.",
+            "I finish my homework every night.",
+            "School starts at eight o'clock.",
+            "I enjoy my school life."
+        ]
     },
-    // 第4關：家庭成員
     {
         level: 4,
-        title: "我的家庭",
-        words: ["mom", "dad", "sister", "brother", "baby", "grandma", "grandpa", "aunt", "uncle", "cousin"]
+        title: "家庭與活動",
+        sentences: [
+            "I live with my family.",
+            "My mom cooks delicious food.",
+            "My dad plays with me.",
+            "I have a younger sister.",
+            "We go to the park on weekends.",
+            "I like playing computer games.",
+            "We watch movies together.",
+            "I help with housework.",
+            "My grandparents visit us often.",
+            "We are a happy family."
+        ]
     },
-    // 第5關：食物
     {
         level: 5,
-        title: "美味食物",
-        words: ["apple", "banana", "cake", "milk", "bread", "rice", "meat", "fish", "egg", "soup"]
+        title: "食物與飲料",
+        sentences: [
+            "I like to eat noodles.",
+            "Do you want some juice?",
+            "I usually eat breakfast at home.",
+            "My favorite fruit is watermelon.",
+            "We often have dinner together.",
+            "I drink milk every morning.",
+            "She bakes a cake for my birthday.",
+            "He likes to eat fast food.",
+            "Let's go to a restaurant.",
+            "The pizza is very tasty."
+        ]
     },
-    // 第6關：身體部位
     {
         level: 6,
-        title: "我的身體",
-        words: ["head", "eye", "nose", "mouth", "hand", "foot", "arm", "leg", "ear", "tooth"]
+        title: "天氣與季節",
+        sentences: [
+            "What's the weather like today?",
+            "It is sunny and warm.",
+            "I like spring the most.",
+            "It often rains in summer.",
+            "The leaves turn yellow in autumn.",
+            "It is cold and snowy in winter.",
+            "Don't forget your umbrella.",
+            "The wind is blowing hard.",
+            "I love to watch the clouds.",
+            "Let's go play outside."
+        ]
     },
-    // 第7關：學校用品
     {
         level: 7,
-        title: "學校用品",
-        words: ["book", "pen", "pencil", "paper", "bag", "desk", "chair", "board", "ruler", "eraser"]
+        title: "動物世界",
+        sentences: [
+            "The lion is a wild animal.",
+            "Dogs are friendly pets.",
+            "Birds can fly high in the sky.",
+            "The elephant has a long trunk.",
+            "Monkeys like to eat bananas.",
+            "Fish live in the water.",
+            "Cats like to chase mice.",
+            "The rabbit eats carrots.",
+            "Snakes can be dangerous.",
+            "Butterflies have beautiful wings."
+        ]
     },
-    // 第8關：交通工具
     {
         level: 8,
-        title: "交通工具",
-        words: ["car", "bus", "train", "plane", "bike", "boat", "truck", "taxi", "ship", "helicopter"]
+        title: "顏色與形狀",
+        sentences: [
+            "My favorite color is blue.",
+            "The grass is green.",
+            "Red is a bright color.",
+            "The sun is yellow.",
+            "A square has four equal sides.",
+            "A circle is round.",
+            "The triangle has three corners.",
+            "The sky is blue today.",
+            "Her dress is pink.",
+            "The car is black."
+        ]
     },
-    // 第9關：天氣
     {
         level: 9,
-        title: "天氣變化",
-        words: ["sun", "rain", "snow", "wind", "cloud", "storm", "hot", "cold", "warm", "cool"]
+        title: "地點與方向",
+        sentences: [
+            "Where is the post office?",
+            "Go straight and turn left.",
+            "The park is next to the school.",
+            "I live near the supermarket.",
+            "How can I get to the station?",
+            "It's on your right side.",
+            "Let's meet at the cafe.",
+            "The library is far from here.",
+            "Walk across the street.",
+            "It's a beautiful city."
+        ]
     },
-    // 第10關：動作
     {
         level: 10,
-        title: "動作詞彙",
-        words: ["run", "jump", "walk", "swim", "fly", "dance", "sing", "play", "read", "write"]
+        title: "形容詞與動作",
+        sentences: [
+            "She is a very tall girl.",
+            "He is running fast.",
+            "The flower smells sweet.",
+            "This is a big house.",
+            "I feel happy today.",
+            "He jumps over the fence.",
+            "She sings a beautiful song.",
+            "I like to read interesting books.",
+            "They are playing football.",
+            "The water is cold."
+        ]
     }
 ];
 
@@ -83,17 +184,33 @@ function initGame() {
     timeLeft = 60;
     currentWordIndex = 0;
     isGameActive = false;
+    clearInterval(gameTimer); // 清除可能存在的計時器
     updateDisplay();
+    document.getElementById('feedback-area').innerHTML = ''; // 清除反饋訊息
+    document.getElementById('word-input').value = '';
+    document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('level-complete-screen').style.display = 'none';
+    document.getElementById('game-over-screen').style.display = 'none';
+    document.getElementById('start-screen').style.display = 'flex';
 }
 
 // 開始遊戲
-function startGame() {
+function startGame(mode) {
+    gameMode = mode; // 設定遊戲模式
     initGame();
     showGameScreen();
     loadLevel(currentLevel);
     startTimer();
     isGameActive = true;
     document.getElementById('word-input').focus();
+
+    if (gameMode === 'battle') {
+        // 顯示 AI 相關元素，並啟動 AI 對手
+        document.getElementById('ai-progress-container').style.display = 'flex';
+        startAITyping();
+    } else {
+        document.getElementById('ai-progress-container').style.display = 'none';
+    }
 }
 
 // 顯示遊戲畫面
@@ -107,21 +224,21 @@ function showGameScreen() {
 // 載入關卡
 function loadLevel(level) {
     const levelData = gameLevels[level - 1];
-    currentWordIndex = 0;
+    currentWordIndex = 0; // 現在是句子，但仍使用此索引
     updateDisplay();
-    showNextWord();
+    showNextSentence();
     
     // 更新關卡標題
     const wordDisplay = document.querySelector('.word-display h3');
-    wordDisplay.textContent = `第${level}關：${levelData.title} - 請輸入以下單字：`;
+    wordDisplay.textContent = `第${level}關：${levelData.title} - 請輸入以下句子：`;
 }
 
-// 顯示下一個單字
-function showNextWord() {
+// 顯示下一個句子
+function showNextSentence() {
     const levelData = gameLevels[currentLevel - 1];
-    if (currentWordIndex < levelData.words.length) {
-        const word = levelData.words[currentWordIndex];
-        document.getElementById('target-word').textContent = word;
+    if (currentWordIndex < levelData.sentences.length) {
+        const sentence = levelData.sentences[currentWordIndex];
+        document.getElementById('target-word').textContent = sentence;
         document.getElementById('word-input').value = '';
         document.getElementById('word-input').focus();
         updateProgress();
@@ -133,39 +250,47 @@ function showNextWord() {
 // 更新進度條
 function updateProgress() {
     const levelData = gameLevels[currentLevel - 1];
-    const progress = (currentWordIndex / levelData.words.length) * 100;
+    const progress = (currentWordIndex / levelData.sentences.length) * 100;
     document.getElementById('progress-fill').style.width = progress + '%';
+
+    if (gameMode === 'battle') {
+        updateAIProgress();
+    }
 }
 
 // 檢查輸入
 function checkInput() {
-    const input = document.getElementById('word-input').value.toLowerCase().trim();
-    const targetWord = document.getElementById('target-word').textContent.toLowerCase();
+    const input = document.getElementById('word-input').value;
+    const targetSentence = document.getElementById('target-word').textContent;
     
-    if (input === targetWord) {
+    if (input === targetSentence) {
         handleCorrectInput();
-    } else if (input.length > 0 && targetWord.startsWith(input)) {
-        // 部分正確，給予視覺反饋
+    } else if (input.length > 0 && targetSentence.startsWith(input)) {
         showPartialCorrect();
-    } else if (input.length > 0 && !targetWord.startsWith(input)) {
-        // 錯誤輸入
+    } else if (input.length > 0 && !targetSentence.startsWith(input)) {
         showWrongInput();
     }
 }
 
 // 處理正確輸入
+let correctChars = 0;
+let typedEntries = 0; // 追蹤完成的單字/句子數
+let startTime = 0;
+
 function handleCorrectInput() {
-    score += 10;
+    const targetSentence = document.getElementById('target-word').textContent;
+    score += targetSentence.length; // 每個字元計分
+    correctChars += targetSentence.length;
+    typedEntries++;
     currentWordIndex++;
     updateDisplay();
     
-    // 顯示正確反饋
     showFeedback('correct', '🎉 ' + getRandomEncouragement());
     
-    // 短暫延遲後顯示下一個單字
     setTimeout(() => {
-        if (currentWordIndex < gameLevels[currentLevel - 1].words.length) {
-            showNextWord();
+        const levelData = gameLevels[currentLevel - 1];
+        if (currentWordIndex < levelData.sentences.length) {
+            showNextSentence();
         } else {
             completeLevel();
         }
@@ -185,7 +310,6 @@ function showWrongInput() {
     input.classList.remove('correct-typing');
     input.classList.add('wrong-typing');
     
-    // 短暫顯示錯誤後恢復
     setTimeout(() => {
         input.classList.remove('wrong-typing');
     }, 300);
@@ -196,7 +320,6 @@ function showFeedback(type, message) {
     const feedbackArea = document.getElementById('feedback-area');
     feedbackArea.innerHTML = `<div class="feedback-${type}">${message}</div>`;
     
-    // 清除之前的反饋
     setTimeout(() => {
         feedbackArea.innerHTML = '';
     }, 2000);
@@ -210,15 +333,29 @@ function completeLevel() {
     document.getElementById('completed-level').textContent = currentLevel;
     document.getElementById('level-score').textContent = score;
     
-    if (currentLevel < 10) {
-        // 顯示關卡完成畫面
+    if (currentLevel < gameLevels.length) {
         document.getElementById('game-screen').style.display = 'none';
         document.getElementById('level-complete-screen').style.display = 'flex';
     } else {
-        // 遊戲完成
         document.getElementById('final-score').textContent = score;
         document.getElementById('game-screen').style.display = 'none';
         document.getElementById('game-over-screen').style.display = 'flex';
+    }
+
+    if (gameMode === 'battle') {
+        clearInterval(aiTimer);
+        // 判斷勝負並顯示結果
+        const playerProgress = currentWordIndex / gameLevels[currentLevel - 1].sentences.length;
+        const aiProgress = aiCurrentWordIndex / gameLevels[currentLevel - 1].sentences.length;
+        let battleResult = '';
+        if (playerProgress > aiProgress) {
+            battleResult = '你贏了！';
+        } else if (aiProgress > playerProgress) {
+            battleResult = 'AI 贏了！';
+        } else {
+            battleResult = '平手！';
+        }
+        showFeedback('info', `對戰結果：${battleResult}`);
     }
 }
 
@@ -230,21 +367,25 @@ function nextLevel() {
     startTimer();
     isGameActive = true;
     document.getElementById('word-input').focus();
+    if (gameMode === 'battle') {
+        startAITyping(); // 重新啟動 AI
+    }
 }
 
 // 重新開始遊戲
 function restartGame() {
     initGame();
-    document.getElementById('start-screen').style.display = 'flex';
-    document.getElementById('game-screen').style.display = 'none';
-    document.getElementById('level-complete-screen').style.display = 'none';
-    document.getElementById('game-over-screen').style.display = 'none';
+    if (gameMode === 'battle') {
+        clearInterval(aiTimer);
+        document.getElementById('ai-progress-container').style.display = 'none';
+    }
 }
 
 // 開始計時器
 function startTimer() {
     timeLeft = 60;
     updateDisplay();
+    startTime = new Date().getTime(); // 記錄開始時間
     
     gameTimer = setInterval(() => {
         timeLeft--;
@@ -254,8 +395,9 @@ function startTimer() {
             clearInterval(gameTimer);
             isGameActive = false;
             showFeedback('wrong', '⏰ 時間到了！');
+            // 自動跳到下一關或結束遊戲
             setTimeout(() => {
-                if (currentLevel < 10) {
+                if (currentLevel < gameLevels.length) {
                     nextLevel();
                 } else {
                     completeLevel();
@@ -265,11 +407,54 @@ function startTimer() {
     }, 1000);
 }
 
+// 計算 WPM 和準確率
+function calculateWPM() {
+    const elapsedTimeInMinutes = (new Date().getTime() - startTime) / 60000;
+    if (elapsedTimeInMinutes <= 0) return 0;
+    return Math.round((correctChars / 5) / elapsedTimeInMinutes); // 假設一個單字平均5個字元
+}
+
+function calculateAccuracy() {
+    const input = document.getElementById('word-input').value;
+    const targetSentence = document.getElementById('target-word').textContent;
+    let correctCharacters = 0;
+    for (let i = 0; i < input.length; i++) {
+        if (input[i] === targetSentence[i]) {
+            correctCharacters++;
+        }
+    }
+    if (input.length === 0) return 100;
+    return Math.round((correctCharacters / input.length) * 100);
+}
+
 // 更新顯示
 function updateDisplay() {
     document.getElementById('current-level').textContent = currentLevel;
     document.getElementById('score').textContent = score;
     document.getElementById('timer').textContent = timeLeft;
+
+    // 顯示 WPM 和準確率 (僅在自己練習模式下)
+    if (gameMode === 'practice') {
+        const wpm = calculateWPM();
+        const accuracy = calculateAccuracy();
+        document.getElementById('wpm-display').textContent = wpm;
+        document.getElementById('accuracy-display').textContent = accuracy;
+        document.getElementById('wpm-accuracy-container').style.display = 'flex';
+    } else {
+        document.getElementById('wpm-accuracy-container').style.display = 'none';
+    }
+
+    // 更新玩家和 AI 進度條顯示
+    const levelData = gameLevels[currentLevel - 1];
+    const playerProgress = (currentWordIndex / levelData.sentences.length) * 100;
+    document.getElementById('player-progress-display').textContent = `${playerProgress.toFixed(0)}%`;
+    document.getElementById('player-progress-fill').style.width = playerProgress + '%';
+
+    if (gameMode === 'battle') {
+        const aiProgress = (aiCurrentWordIndex / levelData.sentences.length) * 100;
+        document.getElementById('ai-progress-display').textContent = `${aiProgress.toFixed(0)}%`;
+        document.getElementById('ai-progress-fill').style.width = aiProgress + '%';
+    }
 }
 
 // 獲取隨機鼓勵詞彙
@@ -277,24 +462,55 @@ function getRandomEncouragement() {
     return encouragements[Math.floor(Math.random() * encouragements.length)];
 }
 
+// AI 對戰邏輯
+let aiCurrentWordIndex = 0;
+let aiTimer;
+let aiTypingSpeed = 50; // AI 打字速度 (字元/秒)
+
+function startAITyping() {
+    aiCurrentWordIndex = 0;
+    updateAIProgress();
+    const levelData = gameLevels[currentLevel - 1];
+    const totalSentenceLength = levelData.sentences.reduce((sum, sentence) => sum + sentence.length, 0);
+    const estimatedTime = totalSentenceLength / aiTypingSpeed * 1000; // 估計完成時間 (毫秒)
+    const interval = estimatedTime / levelData.sentences.length; // 每句的平均時間
+
+    clearInterval(aiTimer);
+    aiTimer = setInterval(() => {
+        if (aiCurrentWordIndex < levelData.sentences.length) {
+            aiCurrentWordIndex++;
+            updateAIProgress();
+        } else {
+            clearInterval(aiTimer);
+        }
+    }, interval);
+}
+
+function updateAIProgress() {
+    const levelData = gameLevels[currentLevel - 1];
+    const aiProgress = (aiCurrentWordIndex / levelData.sentences.length) * 100;
+    document.getElementById('ai-progress-fill').style.width = aiProgress + '%';
+}
+
 // 事件監聽器
 document.addEventListener('DOMContentLoaded', function() {
     const wordInput = document.getElementById('word-input');
     
-    // 輸入事件
     wordInput.addEventListener('input', function() {
         if (isGameActive) {
             checkInput();
+            if (gameMode === 'practice') {
+                updateDisplay(); // 即時更新 WPM 和準確率
+            }
         }
     });
     
-    // 按鍵事件
     wordInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && isGameActive) {
-            const input = this.value.toLowerCase().trim();
-            const targetWord = document.getElementById('target-word').textContent.toLowerCase();
+            const input = this.value;
+            const targetSentence = document.getElementById('target-word').textContent;
             
-            if (input === targetWord) {
+            if (input === targetSentence) {
                 handleCorrectInput();
             } else {
                 showFeedback('wrong', '再試一次！');
@@ -302,12 +518,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // 防止輸入框失去焦點
     wordInput.addEventListener('blur', function() {
         if (isGameActive) {
             setTimeout(() => this.focus(), 100);
         }
     });
+    initGame(); // 初始化遊戲狀態
 });
 
 // 添加音效（簡單的Web Audio API實現）

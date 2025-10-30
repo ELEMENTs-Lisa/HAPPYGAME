@@ -7,13 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body style="overflow: hidden;">
-    <div class="shooting-star-container">
-        <div class="shooting-star"></div>
-        <div class="shooting-star" style="animation-delay: 1s; left: 20%;"></div>
-        <div class="shooting-star" style="animation-delay: 2s; left: 70%;"></div>
-        <div class="shooting-star" style="animation-delay: 3s; left: 40%;"></div>
-        <div class="shooting-star" style="animation-delay: 4s; left: 85%;"></div>
-    </div>
+    <!-- Palace Theme Background Placeholder -->
     <div class="game-container">
         <header class="game-header">
             <h1>🌟 兒童英文打字遊戲 🌟</h1>
@@ -28,6 +22,24 @@
                     <span>時間: <span id="timer">60</span>秒</span>
                 </div>
             </div>
+            <div class="game-info" id="wpm-accuracy-container" style="display: none;">
+                <div class="wpm-info">
+                    <span>WPM: <span id="wpm-display">0</span></span>
+                </div>
+                <div class="accuracy-info">
+                    <span>準確率: <span id="accuracy-display">0</span>%</span>
+                </div>
+            </div>
+            <div class="game-info" id="ai-progress-container" style="display: none;">
+                <div class="player-progress">
+                    <span>玩家進度: <span id="player-progress-display">0%</span></span>
+                    <div class="progress-bar"><div class="progress-fill" id="player-progress-fill"></div></div>
+                </div>
+                <div class="ai-progress">
+                    <span>AI 進度: <span id="ai-progress-display">0%</span></span>
+                    <div class="progress-bar"><div class="progress-fill" id="ai-progress-fill"></div></div>
+                </div>
+            </div>
         </header>
 
         <main class="game-main">
@@ -36,7 +48,10 @@
                     <h2>歡迎來到英文打字遊戲！</h2>
                     <p>請按照螢幕上的單字進行打字練習</p>
                     <p>每個關卡都有不同的單字等你來挑戰！</p>
-                    <button class="start-btn" onclick="startGame()">開始遊戲</button>
+                    <div class="game-mode-selection">
+                        <button class="start-btn" onclick="startGame('practice')">自己練習</button>
+                        <button class="start-btn" onclick="startGame('battle')">人機對戰</button>
+                    </div>
                 </div>
             </div>
 
