@@ -7,13 +7,70 @@
 
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: #000; /* 星空背景為黑色 */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #333;
+    overflow: hidden; /* 防止滾動條 */
 }
+
+/* 星空背景 */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle infinite ease-in-out;
+}
+
+/* 星星大小和動畫速度 */
+.star.small {
+    width: 2px;
+    height: 2px;
+    animation-duration: 2s;
+    opacity: 0.7;
+}
+
+.star.medium {
+    width: 3px;
+    height: 3px;
+    animation-duration: 3s;
+    opacity: 0.8;
+}
+
+.star.large {
+    width: 4px;
+    height: 4px;
+    animation-duration: 4s;
+    opacity: 0.9;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes move-stars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2000px); } /* 根據需要調整移動距離 */
+}
+
+/* 星星容器 */
+.stars-layer-1 { animation: move-stars 100s linear infinite; }
+.stars-layer-2 { animation: move-stars 150s linear infinite; }
+.stars-layer-3 { animation: move-stars 200s linear infinite; }
 
 .game-container {
     background: white;
