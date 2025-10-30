@@ -6,41 +6,92 @@
 }
 
 body {
-    font-family: 'Times New Roman', serif; /* 宮廷風格字體 */
-    background: #f0e68c; /* 淡金色背景 */
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* 改回較活潑字體 */
+    background: #2a0a2a; /* 深紫色背景 */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #5a3e36; /* 深棕色，符合宮廷風格 */
+    color: #f0f0f0; /* 淺色字體，適合深色背景 */
     overflow: hidden;
     position: relative;
 }
 
-/* 移除流星雨效果 */
+/* 流星雨效果 */
+.shooting-star {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 192, 203, 0), rgba(255, 192, 203, 1)); /* 粉紅色流星 */
+    transform-origin: bottom;
+    animation: shooting-star 5s linear infinite;
+    opacity: 0;
+    pointer-events: none; /* 讓流星不影響點擊事件 */
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 192, 203, 0), rgba(255, 192, 203, 1)); /* 粉紅色流星尾巴 */
+    animation: tail 5s linear infinite;
+}
+
+@keyframes shooting-star {
+    0% {
+        transform: rotate(30deg) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(30deg) translateY(120vh);
+        opacity: 0;
+    }
+}
+
+@keyframes tail {
+    0% {
+        height: 0;
+    }
+    60% {
+        height: 100px;
+    }
+    100% {
+        height: 0;
+    }
+}
 
 .game-container {
-    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); /* 淺色漸變 */
+    background: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     padding: 30px;
     max-width: 800px;
     width: 90%;
     text-align: center;
+    position: relative; /* 確保在流星之上 */
+    z-index: 1;
 }
 
 /* 標題區域 */
 .game-header h1 {
-    color: #8b0000; /* 深紅色 */
+    color: #ff69b4; /* 粉紅色 */
     font-size: 2.8em;
     margin-bottom: 25px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .game-info {
     display: flex;
     justify-content: space-around;
-    background: #fffafa; /* 淺米色 */
+    background: rgba(255, 255, 255, 0.8); /* 半透明淺色背景 */
     padding: 18px;
     border-radius: 18px;
     margin-bottom: 25px;
@@ -49,12 +100,12 @@ body {
 }
 
 .game-info > div {
-    background: #fdf5e6; /* 淺黃色 */
+    background: rgba(255, 255, 255, 0.95); /* 更淺色背景 */
     padding: 12px 22px;
     border-radius: 12px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     font-weight: bold;
-    color: #8b4513; /* 馬鞍棕色 */
+    color: #da70d6; /* 蘭花紫 */
 }
 
 .player-progress, .ai-progress {
@@ -66,6 +117,7 @@ body {
 
 .player-progress span, .ai-progress span {
     margin-bottom: 5px;
+    color: #da70d6; /* 蘭花紫 */
 }
 
 /* 遊戲畫面 */
@@ -79,7 +131,7 @@ body {
 
 /* 歡迎畫面 */
 .welcome-message h2 {
-    color: #8b0000; /* 深紅色 */
+    color: #ff69b4; /* 粉紅色 */
     font-size: 2.4em;
     margin-bottom: 25px;
 }
@@ -87,7 +139,7 @@ body {
 .welcome-message p {
     font-size: 1.3em;
     margin-bottom: 18px;
-    color: #696969; /* 暗灰色 */
+    color: #a0522d; /* 褐紅色 */
     line-height: 1.7;
 }
 
@@ -98,8 +150,8 @@ body {
 }
 
 /* 按鈕樣式 */
-.start-btn, .next-level-btn, .restart-btn {
-    background: linear-gradient(45deg, #b8860b, #daa520); /* 金色漸變 */
+.start-btn, .next-level-btn, .restart-btn, .back-to-menu-btn {
+    background: linear-gradient(45deg, #ff69b4, #da70d6); /* 粉紫漸變 */
     color: white;
     border: none;
     padding: 18px 35px;
@@ -107,14 +159,15 @@ body {
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 18px rgba(184, 134, 11, 0.4);
+    box-shadow: 0 6px 18px rgba(255, 105, 180, 0.4);
     font-family: inherit;
     font-weight: bold;
+    margin: 5px; /* 增加按鈕間距 */
 }
 
-.start-btn:hover, .next-level-btn:hover, .restart-btn:hover {
+.start-btn:hover, .next-level-btn:hover, .restart-btn:hover, .back-to-menu-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(184, 134, 11, 0.5);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
 }
 
 /* 遊戲區域 */
@@ -123,7 +176,7 @@ body {
 }
 
 .word-display h3 {
-    color: #8b0000; /* 深紅色 */
+    color: #ff69b4; /* 粉紅色 */
     font-size: 1.8em;
     margin-bottom: 22px;
 }
@@ -131,12 +184,12 @@ body {
 .target-word {
     font-size: 3.5em;
     font-weight: bold;
-    color: #4b0082; /* 靛藍色 */
-    background: linear-gradient(45deg, #ffd700, #ffa500); /* 金色到橙色漸變 */
+    color: #8a2be2; /* 藍紫色 */
+    background: linear-gradient(45deg, #ee82ee, #da70d6); /* 紫羅蘭到蘭花紫漸變 */
     padding: 22px 45px;
     border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     margin: 22px 0;
     display: inline-block;
     min-width: 220px;
@@ -153,18 +206,18 @@ body {
     width: 100%;
     padding: 18px 22px;
     font-size: 1.6em;
-    border: 3px solid #b8860b; /* 金色邊框 */
+    border: 3px solid #ff69b4; /* 粉紅色邊框 */
     border-radius: 18px;
     text-align: center;
     font-family: inherit;
     transition: all 0.3s ease;
-    background: #fffafa;
+    background: rgba(255, 255, 255, 0.9);
 }
 
 #word-input:focus {
     outline: none;
-    border-color: #daa520;
-    box-shadow: 0 0 12px rgba(184, 134, 11, 0.4);
+    border-color: #da70d6;
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
     background: white;
 }
 
@@ -172,7 +225,7 @@ body {
 .progress-bar {
     width: 100%;
     height: 12px;
-    background: #e0e0e0;
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 6px;
     margin-top: 18px;
     overflow: hidden;
@@ -180,7 +233,7 @@ body {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(45deg, #b8860b, #daa520); /* 金色漸變 */
+    background: linear-gradient(45deg, #ff69b4, #da70d6); /* 粉紫漸變 */
     width: 0%;
     transition: width 0.3s ease;
     border-radius: 6px;
@@ -196,21 +249,21 @@ body {
 }
 
 .feedback-correct {
-    color: #228b22; /* 森林綠 */
+    color: #3cb371; /* 適中綠色 */
     font-size: 1.6em;
     font-weight: bold;
     animation: bounce 0.5s ease;
 }
 
 .feedback-wrong {
-    color: #dc143c; /* 猩紅色 */
+    color: #ff007f; /* 玫瑰紅 */
     font-size: 1.6em;
     font-weight: bold;
     animation: shake 0.5s ease;
 }
 
 .feedback-encouragement {
-    color: #a0522d; /* 褐紅色 */
+    color: #9370db; /* 中紫色 */
     font-size: 1.3em;
     font-weight: bold;
 }
@@ -243,7 +296,7 @@ body {
 /* 關卡完成畫面 */
 .level-complete-message h2,
 .game-over-message h2 {
-    color: #228b22; /* 森林綠 */
+    color: #3cb371; /* 適中綠色 */
     font-size: 2.8em;
     margin-bottom: 25px;
 }
@@ -252,16 +305,16 @@ body {
 .game-over-message p {
     font-size: 1.4em;
     margin-bottom: 18px;
-    color: #696969;
+    color: #a0522d;
 }
 
 /* 頁腳 */
 .game-footer {
     margin-top: 25px;
     padding: 18px;
-    background: #fdf5e6;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
-    color: #a0522d;
+    color: #9370db;
     font-size: 1.2em;
 }
 
@@ -299,14 +352,14 @@ body {
 
 /* 特殊效果 */
 .correct-typing {
-    background: linear-gradient(45deg, #32cd32, #3cb371) !important; /* 鮮綠色漸變 */
+    background: linear-gradient(45deg, #3cb371, #2e8b57) !important; /* 綠色漸變 */
     color: white !important;
     transform: scale(1.05);
     transition: all 0.3s ease;
 }
 
 .wrong-typing {
-    background: linear-gradient(45deg, #dc143c, #b22222) !important; /* 鮮紅色漸變 */
+    background: linear-gradient(45deg, #ff007f, #c71585) !important; /* 玫瑰紅漸變 */
     color: white !important;
     transform: scale(0.95);
     transition: all 0.3s ease;

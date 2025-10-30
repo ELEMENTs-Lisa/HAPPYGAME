@@ -465,7 +465,7 @@ function getRandomEncouragement() {
 // AI 對戰邏輯
 let aiCurrentWordIndex = 0;
 let aiTimer;
-let aiTypingSpeed = 50; // AI 打字速度 (字元/秒)
+let aiTypingSpeed = 25; // AI 打字速度 (字元/秒), 降低 50%
 
 function startAITyping() {
     aiCurrentWordIndex = 0;

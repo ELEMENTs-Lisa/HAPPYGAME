@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body style="overflow: hidden;">
-    <!-- Palace Theme Background Placeholder -->
+    <div class="shooting-star-container">
+        <div class="shooting-star"></div>
+        <div class="shooting-star" style="animation-delay: 1s; left: 20%;"></div>
+        <div class="shooting-star" style="animation-delay: 2s; left: 70%;"></div>
+        <div class="shooting-star" style="animation-delay: 3s; left: 40%;"></div>
+        <div class="shooting-star" style="animation-delay: 4s; left: 85%;"></div>
+    </div>
     <div class="game-container">
         <header class="game-header">
-            <h1>🌟 兒童英文打字遊戲 🌟</h1>
+            <h1>轉世至異世界成為手速大神的我</h1>
             <div class="game-info">
                 <div class="level-info">
                     <span>關卡: <span id="current-level">1</span>/10</span>
@@ -77,6 +83,7 @@
                     <p>恭喜你完成了第 <span id="completed-level">1</span> 關！</p>
                     <p>你的分數：<span id="level-score">0</span> 分</p>
                     <button class="next-level-btn" onclick="nextLevel()">下一關</button>
+                    <button class="back-to-menu-btn" onclick="restartGame()">回到主選單</button>
                 </div>
             </div>
 
@@ -86,6 +93,7 @@
                     <p>恭喜你完成了所有關卡！</p>
                     <p>總分數：<span id="final-score">0</span> 分</p>
                     <button class="restart-btn" onclick="restartGame()">重新開始</button>
+                    <button class="back-to-menu-btn" onclick="restartGame()">回到主選單</button>
                 </div>
             </div>
         </main>
