@@ -7,136 +7,63 @@
 
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: #000; /* 黑色背景 */
+    background: #0a0a2a; /* 深藍色背景 */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #333;
     overflow: hidden; /* 防止滾動條 */
-    position: relative; /* 為星星和雲層定位 */
+    position: relative;
 }
 
-/* 星星背景 */
-.stars {
+/* 流星雨效果 */
+.shooting-star {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    transform-origin: bottom;
+    animation: shooting-star 5s linear infinite;
+    opacity: 0;
+}
+
+.shooting-star::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     width: 100%;
     height: 100%;
-    display: block;
-    background: #000 url('http://www.script-tutorials.com/demos/360/images/stars.png') repeat top center;
-    z-index: -3; /* 確保在最底層 */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    animation: tail 5s linear infinite;
 }
 
-/* 閃爍效果 */
-.twinkling {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: transparent url('http://www.script-tutorials.com/demos/360/images/twinkling.png') repeat top center;
-    z-index: -2;
-    -moz-animation: move-twink-back 200s linear infinite;
-    -webkit-animation: move-twink-back 200s linear infinite;
-    -ms-animation: move-twink-back 200s linear infinite;
-    animation: move-twink-back 200s linear infinite;
-}
-
-/* 雲層效果 */
-.clouds {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: transparent url('http://www.script-tutorials.com/demos/360/images/clouds3.png') repeat top center;
-    z-index: -1;
-    -moz-animation: move-clouds-back 200s linear infinite;
-    -webkit-animation: move-clouds-back 200s linear infinite;
-    -ms-animation: move-clouds-back 200s linear infinite;
-    animation: move-clouds-back 200s linear infinite;
-}
-
-/* 動畫定義 */
-@-moz-keyframes move-twink-back {
-    from {
-        background-position: 0 0;
+@keyframes shooting-star {
+    0% {
+        transform: rotate(30deg) translateY(0);
+        opacity: 0;
     }
-    to {
-        background-position: -10000px 5000px;
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(30deg) translateY(120vh);
+        opacity: 0;
     }
 }
 
-@-webkit-keyframes move-twink-back {
-    from {
-        background-position: 0 0;
+@keyframes tail {
+    0% {
+        height: 0;
     }
-    to {
-        background-position: -10000px 5000px;
+    60% {
+        height: 100px;
     }
-}
-
-@-ms-keyframes move-twink-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: -10000px 5000px;
-    }
-}
-
-@keyframes move-twink-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: -10000px 5000px;
-    }
-}
-
-@-moz-keyframes move-clouds-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 10000px 0;
-    }
-}
-
-@-webkit-keyframes move-clouds-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 10000px 0;
-    }
-}
-
-@-ms-keyframes move-clouds-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 10000px 0;
-    }
-}
-
-@keyframes move-clouds-back {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 10000px 0;
+    100% {
+        height: 0;
     }
 }
 
