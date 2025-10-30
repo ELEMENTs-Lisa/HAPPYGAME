@@ -7,70 +7,138 @@
 
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-    background: #000; /* 星空背景為黑色 */
+    background: #000; /* 黑色背景 */
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #333;
     overflow: hidden; /* 防止滾動條 */
+    position: relative; /* 為星星和雲層定位 */
 }
 
-/* 星空背景 */
+/* 星星背景 */
 .stars {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    z-index: -1;
+    display: block;
+    background: #000 url('http://www.script-tutorials.com/demos/360/images/stars.png') repeat top center;
+    z-index: -3; /* 確保在最底層 */
 }
 
-.star {
+/* 閃爍效果 */
+.twinkling {
     position: absolute;
-    background: white;
-    border-radius: 50%;
-    animation: twinkle infinite ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent url('http://www.script-tutorials.com/demos/360/images/twinkling.png') repeat top center;
+    z-index: -2;
+    -moz-animation: move-twink-back 200s linear infinite;
+    -webkit-animation: move-twink-back 200s linear infinite;
+    -ms-animation: move-twink-back 200s linear infinite;
+    animation: move-twink-back 200s linear infinite;
 }
 
-/* 星星大小和動畫速度 */
-.star.small {
-    width: 2px;
-    height: 2px;
-    animation-duration: 2s;
-    opacity: 0.7;
+/* 雲層效果 */
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent url('http://www.script-tutorials.com/demos/360/images/clouds3.png') repeat top center;
+    z-index: -1;
+    -moz-animation: move-clouds-back 200s linear infinite;
+    -webkit-animation: move-clouds-back 200s linear infinite;
+    -ms-animation: move-clouds-back 200s linear infinite;
+    animation: move-clouds-back 200s linear infinite;
 }
 
-.star.medium {
-    width: 3px;
-    height: 3px;
-    animation-duration: 3s;
-    opacity: 0.8;
+/* 動畫定義 */
+@-moz-keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -10000px 5000px;
+    }
 }
 
-.star.large {
-    width: 4px;
-    height: 4px;
-    animation-duration: 4s;
-    opacity: 0.9;
+@-webkit-keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -10000px 5000px;
+    }
 }
 
-@keyframes twinkle {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
+@-ms-keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -10000px 5000px;
+    }
 }
 
-@keyframes move-stars {
-    from { transform: translateY(0); }
-    to { transform: translateY(-2000px); } /* 根據需要調整移動距離 */
+@keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -10000px 5000px;
+    }
 }
 
-/* 星星容器 */
-.stars-layer-1 { animation: move-stars 100s linear infinite; }
-.stars-layer-2 { animation: move-stars 150s linear infinite; }
-.stars-layer-3 { animation: move-stars 200s linear infinite; }
+@-moz-keyframes move-clouds-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 10000px 0;
+    }
+}
+
+@-webkit-keyframes move-clouds-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 10000px 0;
+    }
+}
+
+@-ms-keyframes move-clouds-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 10000px 0;
+    }
+}
+
+@keyframes move-clouds-back {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 10000px 0;
+    }
+}
 
 .game-container {
     background: white;

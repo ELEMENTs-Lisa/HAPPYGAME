@@ -308,26 +308,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => this.focus(), 100);
         }
     });
-
-    // 動態生成星星
-    const numStars = 100; // 星星數量
-    const starsContainer1 = document.querySelector('.stars-layer-1');
-    const starsContainer2 = document.querySelector('.stars-layer-2');
-    const starsContainer3 = document.querySelector('.stars-layer-3');
-
-    function createStar(sizeClass) {
-        const star = document.createElement('div');
-        star.classList.add('star', sizeClass);
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 200 + 'vh'; // 初始位置在視窗上方和內部
-        return star;
-    }
-
-    for (let i = 0; i < numStars; i++) {
-        starsContainer1.appendChild(createStar('small'));
-        starsContainer2.appendChild(createStar('medium'));
-        starsContainer3.appendChild(createStar('large'));
-    }
 });
 
 // 添加音效（簡單的Web Audio API實現）
