@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兒童英文打字遊戲</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🌟 兒童英文打字遊戲 🌟</h1>
+            <div class="game-info">
+                <div class="level-info">
+                    <span>關卡: <span id="current-level">1</span>/10</span>
+                </div>
+                <div class="score-info">
+                    <span>分數: <span id="score">0</span></span>
+                </div>
+                <div class="time-info">
+                    <span>時間: <span id="timer">60</span>秒</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="game-screen" id="start-screen">
+                <div class="welcome-message">
+                    <h2>歡迎來到英文打字遊戲！</h2>
+                    <p>請按照螢幕上的單字進行打字練習</p>
+                    <p>每個關卡都有不同的單字等你來挑戰！</p>
+                    <button class="start-btn" onclick="startGame()">開始遊戲</button>
+                </div>
+            </div>
+
+            <div class="game-screen" id="game-screen" style="display: none;">
+                <div class="word-display">
+                    <h3>請輸入以下單字：</h3>
+                    <div class="target-word" id="target-word">cat</div>
+                </div>
+                
+                <div class="input-area">
+                    <input type="text" id="word-input" placeholder="在這裡輸入單字..." autocomplete="off" spellcheck="false">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="feedback-area" id="feedback-area"></div>
+            </div>
+
+            <div class="game-screen" id="level-complete-screen" style="display: none;">
+                <div class="level-complete-message">
+                    <h2>🎉 關卡完成！</h2>
+                    <p>恭喜你完成了第 <span id="completed-level">1</span> 關！</p>
+                    <p>你的分數：<span id="level-score">0</span> 分</p>
+                    <button class="next-level-btn" onclick="nextLevel()">下一關</button>
+                </div>
+            </div>
+
+            <div class="game-screen" id="game-over-screen" style="display: none;">
+                <div class="game-over-message">
+                    <h2>🎊 遊戲完成！</h2>
+                    <p>恭喜你完成了所有關卡！</p>
+                    <p>總分數：<span id="final-score">0</span> 分</p>
+                    <button class="restart-btn" onclick="restartGame()">重新開始</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <p>💡 提示：慢慢來，準確比速度更重要！</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
